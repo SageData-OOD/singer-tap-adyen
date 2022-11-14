@@ -79,6 +79,8 @@ def clean_row(row: dict, mapping: dict) -> dict:
 
     # For every key and value in the mapping
     for key, key_mapping in mapping.items():
+        if key not in row:
+            row[key]=None
 
         # Retrieve the new mapping or use the original
         new_mapping: str = key_mapping.get('map') or key
