@@ -15,9 +15,8 @@ VERSION: str = pkg_resources.get_distribution("tap-adyen").version
 LOGGER: logging.RootLogger = get_logger()
 REQUIRED_CONFIG_KEYS: tuple = (
     "report_user",
-    "company_account",
     "user_password",
-    "merchant_account",
+    "company_account",
 )
 
 
@@ -48,7 +47,7 @@ def main() -> None:
         args.config["report_user"],
         args.config["company_account"],
         args.config["user_password"],
-        args.config["merchant_account"],
+        args.config.get("merchant_account"),
         args.config.get("test", False),
     )
 

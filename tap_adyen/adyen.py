@@ -84,11 +84,19 @@ class Adyen(object):  # noqa: WPS230
         # Parse start_date string to date
         parsed_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
 
-        # Replace placeholder in reports path
-        company: str = API_PATH_REPORTS_COMPANY.replace(
-            ":company:",
-            self.company_account,
-        )
+        report_path: str = None
+
+        if self.merchant_account:
+            # Replace placeholder in reports path
+            report_path = API_PATH_REPORTS_MERCHANT.replace(
+                ":merchant:",
+                self.merchant_account,
+            )
+        else:
+            report_path = API_PATH_REPORTS_COMPANY.replace(
+                ":company:",
+                self.company_account,
+            )
 
         # Loop through increasing dates
         while True:
@@ -103,7 +111,7 @@ class Adyen(object):  # noqa: WPS230
             url: str = (
                 f"{API_SCHEME}{self.base_url}"
                 f"{API_PATH_REPORTS}"
-                f"{company}"
+                f"{report_path}"
                 f"{report}"
             )
 
@@ -175,11 +183,19 @@ class Adyen(object):  # noqa: WPS230
         # Parse start_date string to date
         parsed_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
 
-        # Replace placeholder in reports path
-        merchant: str = API_PATH_REPORTS_MERCHANT.replace(
-            ":merchant:",
-            self.merchant_account,
-        )
+        report_path: str = None
+
+        if self.merchant_account:
+            # Replace placeholder in reports path
+            report_path = API_PATH_REPORTS_MERCHANT.replace(
+                ":merchant:",
+                self.merchant_account,
+            )
+        else:
+            report_path = API_PATH_REPORTS_COMPANY.replace(
+                ":company:",
+                self.company_account,
+            )
 
         # Loop through increasing dates
         while True:
@@ -194,7 +210,7 @@ class Adyen(object):  # noqa: WPS230
             url: str = (
                 f"{API_SCHEME}{self.base_url}"
                 f"{API_PATH_REPORTS}"
-                f"{merchant}"
+                f"{report_path}"
                 f"{report}"
             )
 
@@ -263,11 +279,19 @@ class Adyen(object):  # noqa: WPS230
             f"{batch_number}",
         )
 
-        # Replace placeholder in reports path
-        merchant: str = API_PATH_REPORTS_MERCHANT.replace(
-            ":merchant:",
-            self.merchant_account,
-        )
+        report_path: str = None
+
+        if self.merchant_account:
+            # Replace placeholder in reports path
+            report_path = API_PATH_REPORTS_MERCHANT.replace(
+                ":merchant:",
+                self.merchant_account,
+            )
+        else:
+            report_path = API_PATH_REPORTS_COMPANY.replace(
+                ":company:",
+                self.company_account,
+            )
 
         # Loop through increasing batch numbers
         while True:
@@ -281,7 +305,7 @@ class Adyen(object):  # noqa: WPS230
             url: str = (
                 f"{API_SCHEME}{self.base_url}"
                 f"{API_PATH_REPORTS}"
-                f"{merchant}"
+                f"{report_path}"
                 f"{report}"
             )
 
