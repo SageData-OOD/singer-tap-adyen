@@ -48,7 +48,7 @@ def get_bookmark_value(
     Returns:
         Optional[Union[str, int]] -- [description]
     """
-    if stream_name in {"dispute_transaction_details", "payment_accounting"}:
+    if stream_name in {"dispute_transaction_details", "payment_accounting", "accounting", "balance"}:
         # Return the date +1 day
         return str(
             datetime.strptime(

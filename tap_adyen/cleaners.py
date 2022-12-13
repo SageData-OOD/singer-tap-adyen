@@ -226,9 +226,103 @@ def clean_settlement_details(
     return row
 
 
+def clean_accounting(
+    row: dict,
+    row_number: int,
+    csv_url: str,
+) -> dict:
+    """Clean accounting.
+
+    Arguments:
+        row {dict} -- Input row
+        row_number {int} -- Row number, used to construct primary key
+        file_date {str} -- File name, used to construct primary key
+
+    Returns:
+        dict -- Cleaned row
+    """
+    # Get the mapping from the STREAMS
+    mapping: Optional[dict] = STREAMS['accounting'].get(
+        'mapping',
+    )
+
+    # Get file date
+    file_date: date = parse_date(csv_url.rstrip('.csv'), fuzzy=True).date()
+
+    # Create primary key
+    date_string: str = '{date:%Y%m%d}'.format(date=file_date)  # noqa: WPS323
+    number: str = str(row_number).rjust(10, '0')
+    row['id'] = int(date_string + number)
+
+    # Add timezone to the date, so that the datetime parser includes it
+    row['Booking Date'] = '{booking_date} {booking_date_time_zone}'.format(
+        booking_date=row.get('Booking Date', ''),
+        booking_date_time_zone=row.get('Booking Date Time Zone', ''),
+    )
+    row['Value Date'] = '{value_date} {value_date_time_zone}'.format(
+        value_date=row.get('Value Date', ''),
+        value_date_time_zone=row.get('Value Date Time Zone', ''),
+    )
+
+    # If a mapping has been defined in STREAMS, apply it
+    if mapping:
+        return clean_row(row, mapping)
+
+    # Else return the original row
+    return row
+
+
+def clean_balance(
+    row: dict,
+    row_number: int,
+    csv_url: str,
+) -> dict:
+    """Clean balance.
+
+    Arguments:
+        row {dict} -- Input row
+        row_number {int} -- Row number, used to construct primary key
+        file_date {str} -- File name, used to construct primary key
+
+    Returns:
+        dict -- Cleaned row
+    """
+    # Get the mapping from the STREAMS
+    mapping: Optional[dict] = STREAMS['balance'].get(
+        'mapping',
+    )
+
+    # Get file date
+    file_date: date = parse_date(csv_url.rstrip('.csv'), fuzzy=True).date()
+
+    # Create primary key
+    date_string: str = '{date:%Y%m%d}'.format(date=file_date)  # noqa: WPS323
+    number: str = str(row_number).rjust(10, '0')
+    row['id'] = int(date_string + number)
+
+    # Add timezone to the date, so that the datetime parser includes it
+    row['Opening Date'] = '{opening_date} {opening_timezone}'.format(
+        opening_date=row.get('Opening Date', ''),
+        opening_timezone=row.get('Opening TimeZone', ''),
+    )
+    row['Closing Date'] = '{closing_date} {closing_timezone}'.format(
+        closing_date=row.get('Closing Date', ''),
+        closing_timezone=row.get('Closing TimeZone', ''),
+    )
+
+    # If a mapping has been defined in STREAMS, apply it
+    if mapping:
+        return clean_row(row, mapping)
+
+    # Else return the original row
+    return row
+
+
 # Collect all cleaners
 CLEANERS: MappingProxyType = MappingProxyType({
     'dispute_transaction_details': clean_dispute_transaction_details,
     'payment_accounting': clean_payment_accounting,
     'settlement_details': clean_settlement_details,
+    'accounting': clean_accounting,
+    'balance': clean_balance,
 })

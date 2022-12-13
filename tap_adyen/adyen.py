@@ -21,9 +21,17 @@ API_PATH_DISPUTE_REPORT: str = "/dispute_report_:date:.csv"
 API_PATH_PAYMENT_REPORT: str = "/payments_accounting_report_:date:.csv"
 API_PATH_SETTLEMENT_REPORT: str = "/settlement_detail_report_batch_:batch:.csv"
 
+# Platform
+API_PLATFORM_PATH_REPORTS = "/balanceplatform"
+API_PLATFORM_BASE_URL_LIVE = "balanceplatform-live.adyen.com"
+API_PLATFORM_BASE_URL_TEST = "balanceplatform-test.adyen.com"
+API_PATH_ACCOUNTING_REPORT: str = "/balanceplatform_payments_accounting_report:date:.csv"
+API_PATH_BALANCE_REPORT: str = "/balanceplatform_payments_balance_report_:date:.csv"
+
+
 HEADERS: MappingProxyType = MappingProxyType(
     {
-        "User-Agent": ("Singer Tap: GitHub.com/Yoast/singer-tap-adyen/ | By Yoast.com"),
+        "User-Agent": "Singer Tap: GitHub.com/Yoast/singer-tap-adyen/ | By Yoast.com",
     }
 )
 
@@ -62,6 +70,7 @@ class Adyen(object):  # noqa: WPS230
 
         # Check what URL to use (test/live)
         self.base_url = API_BASE_URL_TEST if test else API_BASE_URL_LIVE
+        self.platform_base_url = API_PLATFORM_BASE_URL_TEST if test else API_PLATFORM_BASE_URL_LIVE
 
     def dispute_transaction_details(  # noqa: WPS210
         self,
@@ -141,7 +150,7 @@ class Adyen(object):  # noqa: WPS230
                         "found, continue.",
                     )
 
-                    # Increate the day by 1 day
+                    # Increase the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
                     pass
@@ -226,7 +235,7 @@ class Adyen(object):  # noqa: WPS230
                 # Yield the URL
                 yield url
 
-                # Increate the day by 1 day
+                # Increase the day by 1 day
                 parsed_date = parsed_date + timedelta(days=1)
 
             # No report found, stop the loop
@@ -240,7 +249,7 @@ class Adyen(object):  # noqa: WPS230
                         "found, continue.",
                     )
 
-                    # Increate the day by 1 day
+                    # Increase the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
                     pass
@@ -260,6 +269,204 @@ class Adyen(object):  # noqa: WPS230
                 response.raise_for_status()
 
         self.logger.info("Finished: Payment Accounting Reports")
+
+    def accounting(  # noqa: WPS210
+            self,
+            start_date: str,
+            initial_full_table_complete: bool,
+    ) -> Generator[str, None, None]:
+        """Get the Balance Platform Accounting Report URLS.
+
+        Arguments:
+            start_date {str} -- starting date to start generating urls from
+
+        Yields:
+            Generator[str, None, None]}  -- Urls of payment accountinng reports
+        """
+        self.logger.info(
+            "Looking for Balance Platform Accounting reports. Starting with date: "
+            f"{start_date}",
+        )
+
+        # Parse start_date string to date
+        parsed_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
+
+        report_path: str = None
+
+        if self.merchant_account:
+            # Replace placeholder in reports path
+            report_path = API_PATH_REPORTS_MERCHANT.replace(
+                ":merchant:",
+                self.merchant_account,
+            )
+        else:
+            report_path = API_PATH_REPORTS_COMPANY.replace(
+                ":company:",
+                self.company_account,
+            )
+
+        # Loop through increasing dates
+        while True:
+            # Fill in placeholder
+            date: str = parsed_date.strftime("%Y_%m_%d")
+            report: str = API_PATH_ACCOUNTING_REPORT.replace(
+                ":date:",
+                str(date),
+            )
+
+            # Create the URL
+            url: str = (
+                f"{API_SCHEME}{self.platform_base_url}"
+                f"{API_PLATFORM_PATH_REPORTS}"
+                f"{report_path}"
+                f"{report}"
+            )
+
+            # Perform a HEAD request on the report url
+            response: requests.Response = self._head_request(url)  # noqa: WPS437
+
+            # The report with the batch number exists
+            if response.status_code == 200:  # noqa: WPS432
+                self.logger.info(
+                    f"Found Balance Platform Accounting Report date: {date}",
+                )
+
+                # Yield the URL
+                yield url
+
+                # Increase the day by 1 day
+                parsed_date = parsed_date + timedelta(days=1)
+
+            # No report found, stop the loop
+            elif response.status_code == 404:  # noqa: WPS432
+                if (
+                        not initial_full_table_complete
+                        and parsed_date < datetime.utcnow() + timedelta(days=-1)
+                ):
+                    self.logger.info(
+                        f"Balance Platform Accounting Report date: {date} not "
+                        "found, continue.",
+                    )
+
+                    # Increase the day by 1 day
+                    parsed_date = parsed_date + timedelta(days=1)
+
+                    pass
+                else:
+                    self.logger.debug(
+                        f"Balance Platform Accounting Report date: {date} not "
+                        "found, stopping.",
+                    )
+                    break
+
+            # Unexpected HTTP response
+            else:
+                self.logger.critical(
+                    f"Unexpected HTTP status code while checking: {url}. ",
+                    f"({response.status_code})",
+                )
+                response.raise_for_status()
+
+        self.logger.info("Finished: Balance Platform Accounting Report")
+
+    def balance(  # noqa: WPS210
+            self,
+            start_date: str,
+            initial_full_table_complete: bool,
+    ) -> Generator[str, None, None]:
+        """Get the Balance Platform Balance Report URLS.
+
+        Arguments:
+            start_date {str} -- starting date to start generating urls from
+
+        Yields:
+            Generator[str, None, None]}  -- Urls of payment accountinng reports
+        """
+        self.logger.info(
+            "Looking for Balance Platform Balance reports. Starting with date: "
+            f"{start_date}",
+        )
+
+        # Parse start_date string to date
+        parsed_date: datetime = datetime.strptime(start_date, "%Y-%m-%d")
+
+        report_path: str = None
+
+        if self.merchant_account:
+            # Replace placeholder in reports path
+            report_path = API_PATH_REPORTS_MERCHANT.replace(
+                ":merchant:",
+                self.merchant_account,
+            )
+        else:
+            report_path = API_PATH_REPORTS_COMPANY.replace(
+                ":company:",
+                self.company_account,
+            )
+
+        # Loop through increasing dates
+        while True:
+            # Fill in placeholder
+            date: str = parsed_date.strftime("%Y_%m_%d")
+            report: str = API_PATH_BALANCE_REPORT.replace(
+                ":date:",
+                str(date),
+            )
+
+            # Create the URL
+            url: str = (
+                f"{API_SCHEME}{self.platform_base_url}"
+                f"{API_PLATFORM_PATH_REPORTS}"
+                f"{report_path}"
+                f"{report}"
+            )
+
+            # Perform a HEAD request on the report url
+            response: requests.Response = self._head_request(url)  # noqa: WPS437
+
+            # The report with the batch number exists
+            if response.status_code == 200:  # noqa: WPS432
+                self.logger.info(
+                    f"Found Balance Platform Balance Report date: {date}",
+                )
+
+                # Yield the URL
+                yield url
+
+                # Increase the day by 1 day
+                parsed_date = parsed_date + timedelta(days=1)
+
+            # No report found, stop the loop
+            elif response.status_code == 404:  # noqa: WPS432
+                if (
+                        not initial_full_table_complete
+                        and parsed_date < datetime.utcnow() + timedelta(days=-1)
+                ):
+                    self.logger.info(
+                        f"Balance Platform Balance Report date: {date} not "
+                        "found, continue.",
+                    )
+
+                    # Increase the day by 1 day
+                    parsed_date = parsed_date + timedelta(days=1)
+
+                    pass
+                else:
+                    self.logger.debug(
+                        f"Balance Platform Balance Report date: {date} not "
+                        "found, stopping.",
+                    )
+                    break
+
+            # Unexpected HTTP response
+            else:
+                self.logger.critical(
+                    f"Unexpected HTTP status code while checking: {url}. ",
+                    f"({response.status_code})",
+                )
+                response.raise_for_status()
+
+        self.logger.info("Finished: Balance Platform Balance Report")
 
     def settlement_details(
         self,

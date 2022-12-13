@@ -1,0 +1,28 @@
+{
+	"selected": false,
+	"type": [
+		"null",
+		"object"
+	],
+	"additionalProperties": false,
+	"properties": {
+      "id": {"type": "string"},
+      "balance_platform": {"type": "string"},
+      "account_holder": {"type": "string"},
+      "balance_account": {"type": "string"},
+      "opening_balance_currency": {"type": "string"},
+      "opening_balance_amount": {"type": "number"},
+      "opening_date": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "opening_timezone": {"type": "string"},
+      "closing_balance_currency": {"type": "string"},
+      "closing_balance_amount": {"type": "number"},
+      "closing_date": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "closing_timezone": {"type": "string"}
+    }
+}
