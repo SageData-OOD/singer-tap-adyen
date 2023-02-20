@@ -39,7 +39,10 @@
 			"type": "string"
 		},
 		"main_amount": {
-			"type": "number"
+			"type": [
+				"null", 
+				"number"
+			]
 		},
 		"record_type": {
 			"type": "string"
@@ -54,10 +57,16 @@
 			]
 		},
 		"authorised": {
-			"type": "number"
+			"type": [
+				"null", 
+				"number"
+			]
 		},
 		"captured": {
-			"type": "number"
+			"type": [
+				"null", 
+				"number"
+			]
 		},
 		"settlement_currency": {
 			"type": [
