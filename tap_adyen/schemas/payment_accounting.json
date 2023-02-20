@@ -48,7 +48,10 @@
 			"type": "string"
 		},
 		"received": {
-			"type": "number"
+			"type": [
+				"null", 
+				"number"
+			]
 		},
 		"authorised": {
 			"type": "number"
