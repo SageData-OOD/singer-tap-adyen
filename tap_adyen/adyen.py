@@ -231,10 +231,7 @@ class Adyen(object):  # noqa: WPS230
 
             # No report found, stop the loop
             elif response.status_code == 404:  # noqa: WPS432
-                if (
-                    not initial_full_table_complete
-                    and parsed_date < datetime.utcnow() + timedelta(days=-1)
-                ):
+                if (parsed_date < datetime.utcnow() + timedelta(days=-1)):
                     self.logger.info(
                         f"Dispute transaction details report date: {date} not "
                         "found, continue.",
