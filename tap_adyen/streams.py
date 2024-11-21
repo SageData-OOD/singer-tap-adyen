@@ -490,6 +490,141 @@ STREAMS: MappingProxyType = MappingProxyType({
             'Network Token Available': {
                 'map': 'network_token_available', 'type': bool, 'null': True,
             },
+            'Booking Date (AMS)': {
+                'map': 'booking_date_ams', 'null': True,
+            },
+            'Creation Date': {
+                'map': 'creation_date', 'null': True,
+            },
+            'Creation Date (AMS)': {
+                'map': 'creation_date_ams', 'null': True,
+            },
+            'Payable Batch': {
+                'map': 'payable_batch', 'null': True,
+            },
+            'Payout Date': {
+                'map': 'payout_date', 'null': True,
+            },
+            'Gratuity Amount': {
+                'map': 'gratuity_amount', 'null': True,
+            },
+            'Surcharge Amount': {
+                'map': 'surcharge_amount', 'null': True,
+            },
+            'DCC Markup (SC)': {
+                'map': 'dcc_markup_sc', 'null': True,
+            },
+            'ICFS details': {
+                'map': 'icfs_details', 'null': True,
+            },
+            'Global Card Brand': {
+                'map': 'global_card_brand', 'null': True,
+            },
+            'Issuer Country': {
+                'map': 'issuer_country', 'null': True,
+            },
+            'Shopper Country': {
+                'map': 'shopper_country', 'null': True,
+            },
+            'Card Number': {
+                'map': 'card_number', 'null': True,
+            },
+            'Funding Source': {
+                'map': 'funding_source', 'null': True,
+            },
+            'Acquirer': {
+                'map': 'acquirer', 'null': True,
+            },
+            'Acquirer Account': {
+                'map': 'acquirer_account', 'null': True,
+            },
+            'MID': {
+                'map': 'mid', 'null': True,
+            },
+            'Acquirer Auth Code': {
+                'map': 'acquirer_auth_code', 'null': True,
+            },
+            'Acquirer Reference': {
+                'map': 'acquirer_reference', 'null': True,
+            },
+            'ARN': {
+                'map': 'arn', 'null': True,
+            },
+            'Original Amount': {
+                'map': 'original_amount', 'null': True,
+            },
+            'Installments (PC)': {
+                'map': 'installments_pc', 'null': True,
+            },
+            'Advanced (PC)': {
+                'map': 'advanced_pc', 'null': True,
+            },
+            'Advancement Code': {
+                'map': 'advancement_code', 'null': True,
+            },
+            'Advancement Batch': {
+                'map': 'advancement_batch', 'null': True,
+            },
+            'Booking Type': {
+                'map': 'booking_type', 'null': True,
+            },
+            'Advancement Fee %': {
+                'map': 'advancement_fee_percent', 'null': True,
+            },
+            'Installments': {
+                'map': 'installments', 'null': True,
+            },
+            'Unique Terminal ID': {
+                'map': 'unique_terminal_id', 'null': True,
+            },
+            'Metadata': {
+                'map': 'metadata', 'null': True,
+            },
+            'Merchant Order Reference': {
+                'map': 'merchant_order_reference', 'null': True,
+            },
+            'Payment Requester Type': {
+                'map': 'payment_requester_type', 'null': True,
+            },
+            'Network Token Used': {
+                'map': 'network_token_used', 'null': True,
+            },
+            'Network Token Available': {
+                'map': 'network_token_available', 'null': True,
+            },
+            'Store': {
+                'map': 'store', 'null': True,
+            },
+            'Issuer Name': {
+                'map': 'issuer_name', 'null': True,
+            },
+            'Risk Premium': {
+                'map': 'risk_premium', 'null': True,
+            },
+            'Record Type': {
+                'map': 'record_type', 'null': True,
+            },
+            'Modification Psp Reference': {
+                'map': 'modification_psp_reference', 'null': True,
+            },
+            'Split Payment Data': {
+                'map': 'split_payment_data', 'null': True,
+            },
+            'Exchange Rate': {
+                'map': 'exchange_rate', 'null': True,
+            },
+            'Payment Account Reference': {
+                'map': 'payment_account_reference', 'null': True,
+            },
+            'Tender Reference': {
+                'map': 'tender_reference', 'null': True,
+            },
+            'Shopper Reference': {
+                'map': 'shopper_reference', 'null': True,
+            },
+            'Shopper Name': {
+                'map': 'shopper_name', 'null': True,
+            },
         },
     },
     'settlement_details': {
@@ -570,6 +705,139 @@ STREAMS: MappingProxyType = MappingProxyType({
             'Modification Merchant Reference': {
                 'map': 'modification_merchant_reference', 'null': True,
             },
+            'Authorised Date': {
+                'map': 'authorised_date', 'null': True,
+            },
+            'Authorised Date TimeZone': {
+                'map': 'authorised_date_time_zone', 'null': True,
+            },
+            'Creation Date (AMS)': {
+                'map': 'creation_date_ams', 'null': True,
+            },
+            'Balance Currency': {
+                'map': 'balance_currency', 'null': True,
+            },
+            'Net Debit (BC)': {
+                'map': 'net_debit_bc', 'null': True,
+            },
+            'Net Credit (BC)': {
+                'map': 'net_credit_bc', 'null': True,
+            },
+            'Payment Fees (NC)': {
+                'map': 'payment_fees_nc', 'null': True,
+            },
+            'DCC Markup (NC)': {
+                'map': 'dcc_markup_nc', 'null': True,
+            },
+            'Global Card Brand': {
+                'map': 'global_card_brand', 'null': True,
+            },
+            'Gratuity Amount': {
+                'map': 'gratuity_amount', 'null': True,
+            },
+            'Surcharge Amount': {
+                'map': 'surcharge_amount', 'null': True,
+            },
+            'Advanced (NC)': {
+                'map': 'advanced_nc', 'null': True,
+            },
+            'Advancement Code': {
+                'map': 'advancement_code', 'null': True,
+            },
+            'Advancement Batch': {
+                'map': 'advancement_batch', 'null': True,
+            },
+            'Booking Type': {
+                'map': 'booking_type', 'null': True,
+            },
+            'Acquirer': {
+                'map': 'acquirer', 'null': True,
+            },
+            'Split Settlement': {
+                'map': 'split_settlement', 'null': True,
+            },
+            'Split Payment Data': {
+                'map': 'split_payment_data', 'null': True,
+            },
+            'Funds Destination': {
+                'map': 'funds_destination', 'null': True,
+            },
+            'Balance Platform Debit': {
+                'map': 'balance_platform_debit', 'null': True,
+            },
+            'Balance Platform Credit': {
+                'map': 'balance_platform_credit', 'null': True,
+            },
+            'Booking Date': {
+                'map': 'booking_date', 'null': True,
+            },
+            'Booking Date TimeZone': {
+                'map': 'booking_date_time_zone', 'null': True,
+            },
+            'Booking Date (AMS)': {
+                'map': 'booking_date_ams', 'null': True,
+            },
+            'AdditionalType': {
+                'map': 'additional_type', 'null': True,
+            },
+            'Installments': {
+                'map': 'installments', 'null': True,
+            },
+            'Issuer Country': {
+                'map': 'issuer_country', 'null': True,
+            },
+            'Shopper Country': {
+                'map': 'shopper_country', 'null': True,
+            },
+            'Clearing Network': {
+                'map': 'clearing_network', 'null': True,
+            },
+            'Terminal ID': {
+                'map': 'terminal_id', 'null': True,
+            },
+            'Tender Reference': {
+                'map': 'tender_reference', 'null': True,
+            },
+            'Merchant Order Reference': {
+                'map': 'merchant_order_reference', 'null': True,
+            },
+            'Metadata': {
+                'map': 'metadata', 'null': True,
+            },
+            'Pos Transaction Date': {
+                'map': 'pos_transaction_date', 'null': True,
+            },
+            'Pos Transaction Date TimeZone': {
+                'map': 'pos_transaction_date_time_zone', 'null': True,
+            },
+            'Store': {
+                'map': 'store', 'null': True,
+            },
+            'Dispute Reference': {
+                'map': 'dispute_reference', 'null': True,
+            },
+            'Register Booking Type': {
+                'map': 'register_booking_type', 'null': True,
+            },
+            'ARN': {
+                'map': 'arn', 'null': True,
+            },
+            'Shopper Reference': {
+                'map': 'shopper_reference', 'null': True,
+            },
+            'Payment Transaction Group': {
+                'map': 'payment_transaction_group', 'null': True,
+            },
+            'Settlement Flow': {
+                'map': 'settlement_flow', 'null': True,
+            },
+            'Authorisation Code': {
+                'map': 'authorisation_code', 'null': True,
+            },
+            'Card Number': {
+                'map': 'card_number', 'null': True,
+            },
+
         },
     },
 })
