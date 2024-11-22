@@ -146,11 +146,11 @@
 				"boolean"
 			]
 		},
-		"booking_date_ams": { "type": ["string", "null"], "format": "date" },
-		"creation_date": { "type": ["string", "null"], "format": "date" },
-		"creation_date_ams": { "type": ["string", "null"], "format": "date" },
+		"booking_date_ams": { "type": ["string", "null"], "format": "date-time" },
+		"creation_date": { "type": ["string", "null"], "format": "date-time" },
+		"creation_date_ams": { "type": ["string", "null"], "format": "date-time" },
 		"payable_batch": { "type": ["number", "null"] },
-		"payout_date": { "type": ["string", "null"], "format": "date" },
+		"payout_date": { "type": ["string", "null"], "format": "date-time" },
 		"gratuity_amount": { "type": ["number", "null"] },
 		"surcharge_amount": { "type": ["number", "null"] },
 		"dcc_markup_sc": { "type": ["number", "null"] },

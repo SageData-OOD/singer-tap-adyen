@@ -6,6 +6,18 @@ from types import MappingProxyType
 
 from dateutil.parser import parse as parse_date
 
+def parse_bool(s):
+    if isinstance(s, str):
+        s = s.strip().lower()
+        if s in ['true', '1', 'yes', 'y', 'on']:
+            return True
+        elif s in ['false', '', '0', 'no', 'n', 'off']:
+            return False
+    elif isinstance(s, bool):
+        return s
+    
+    raise ValueError(f"Cannot parse boolean value from '{s}'")
+
 # Helper constants for timezone parsing
 HOUR: int = 3600
 TIMEZONES: MappingProxyType = MappingProxyType({
@@ -485,34 +497,34 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'modification_merchant_reference', 'null': True,
             },
             'Network Token Used': {
-                'map': 'network_token_used', 'type': bool, 'null': True,
+                'map': 'network_token_used', 'type': parse_bool, 'null': True,
             },
             'Network Token Available': {
-                'map': 'network_token_available', 'type': bool, 'null': True,
+                'map': 'network_token_available', 'type': parse_bool, 'null': True,
             },
             'Booking Date (AMS)': {
-                'map': 'booking_date_ams', 'null': True,
+                'map': 'booking_date_ams', 'type': date_parser, 'null': True,
             },
             'Creation Date': {
-                'map': 'creation_date', 'null': True,
+                'map': 'creation_date', 'type': date_parser, 'null': True,
             },
             'Creation Date (AMS)': {
-                'map': 'creation_date_ams', 'null': True,
+                'map': 'creation_date_ams', 'type': date_parser, 'null': True,
             },
             'Payable Batch': {
-                'map': 'payable_batch', 'null': True,
+                'map': 'payable_batch', 'type': Decimal, 'null': True,
             },
             'Payout Date': {
-                'map': 'payout_date', 'null': True,
+                'map': 'payout_date', 'type': date_parser, 'null': True,
             },
             'Gratuity Amount': {
-                'map': 'gratuity_amount', 'null': True,
+                'map': 'gratuity_amount', 'type': Decimal, 'null': True,
             },
             'Surcharge Amount': {
-                'map': 'surcharge_amount', 'null': True,
+                'map': 'surcharge_amount', 'type': Decimal, 'null': True,
             },
             'DCC Markup (SC)': {
-                'map': 'dcc_markup_sc', 'null': True,
+                'map': 'dcc_markup_sc', 'type': Decimal, 'null': True,
             },
             'ICFS details': {
                 'map': 'icfs_details', 'null': True,
@@ -551,13 +563,13 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'arn', 'null': True,
             },
             'Original Amount': {
-                'map': 'original_amount', 'null': True,
+                'map': 'original_amount', 'type': Decimal, 'null': True,
             },
             'Installments (PC)': {
-                'map': 'installments_pc', 'null': True,
+                'map': 'installments_pc', 'type': Decimal, 'null': True,
             },
             'Advanced (PC)': {
-                'map': 'advanced_pc', 'null': True,
+                'map': 'advanced_pc', 'type': Decimal, 'null': True,
             },
             'Advancement Code': {
                 'map': 'advancement_code', 'null': True,
@@ -599,7 +611,7 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'issuer_name', 'null': True,
             },
             'Risk Premium': {
-                'map': 'risk_premium', 'null': True,
+                'map': 'risk_premium', "type": parse_bool, 'null': True,
             },
             'Record Type': {
                 'map': 'record_type', 'null': True,
@@ -611,7 +623,7 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'split_payment_data', 'null': True,
             },
             'Exchange Rate': {
-                'map': 'exchange_rate', 'null': True,
+                'map': 'exchange_rate', 'type': Decimal, 'null': True,
             },
             'Payment Account Reference': {
                 'map': 'payment_account_reference', 'null': True,
@@ -706,40 +718,40 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'modification_merchant_reference', 'null': True,
             },
             'Authorised Date': {
-                'map': 'authorised_date', 'null': True,
+                'map': 'authorised_date', 'type': date_parser, 'null': True,
             },
             'Authorised Date TimeZone': {
                 'map': 'authorised_date_time_zone', 'null': True,
             },
             'Creation Date (AMS)': {
-                'map': 'creation_date_ams', 'null': True,
+                'map': 'creation_date_ams', 'type': date_parser, 'null': True,
             },
             'Balance Currency': {
                 'map': 'balance_currency', 'null': True,
             },
             'Net Debit (BC)': {
-                'map': 'net_debit_bc', 'null': True,
+                'map': 'net_debit_bc', 'type': Decimal, 'null': True,
             },
             'Net Credit (BC)': {
-                'map': 'net_credit_bc', 'null': True,
+                'map': 'net_credit_bc', 'type': Decimal, 'null': True,
             },
             'Payment Fees (NC)': {
-                'map': 'payment_fees_nc', 'null': True,
+                'map': 'payment_fees_nc', 'type': Decimal, 'null': True,
             },
             'DCC Markup (NC)': {
-                'map': 'dcc_markup_nc', 'null': True,
+                'map': 'dcc_markup_nc', 'type': Decimal, 'null': True,
             },
             'Global Card Brand': {
                 'map': 'global_card_brand', 'null': True,
             },
             'Gratuity Amount': {
-                'map': 'gratuity_amount', 'null': True,
+                'map': 'gratuity_amount', 'type': Decimal, 'null': True,
             },
             'Surcharge Amount': {
-                'map': 'surcharge_amount', 'null': True,
+                'map': 'surcharge_amount', 'type': Decimal, 'null': True,
             },
             'Advanced (NC)': {
-                'map': 'advanced_nc', 'null': True,
+                'map': 'advanced_nc', 'type': Decimal, 'null': True,
             },
             'Advancement Code': {
                 'map': 'advancement_code', 'null': True,
@@ -763,19 +775,19 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'funds_destination', 'null': True,
             },
             'Balance Platform Debit': {
-                'map': 'balance_platform_debit', 'null': True,
+                'map': 'balance_platform_debit', 'type': Decimal, 'null': True,
             },
             'Balance Platform Credit': {
-                'map': 'balance_platform_credit', 'null': True,
+                'map': 'balance_platform_credit', 'type': Decimal, 'null': True,
             },
             'Booking Date': {
-                'map': 'booking_date', 'null': True,
+                'map': 'booking_date', 'type': date_parser, 'null': True,
             },
             'Booking Date TimeZone': {
                 'map': 'booking_date_time_zone', 'null': True,
             },
             'Booking Date (AMS)': {
-                'map': 'booking_date_ams', 'null': True,
+                'map': 'booking_date_ams', 'type': date_parser, 'null': True,
             },
             'AdditionalType': {
                 'map': 'additional_type', 'null': True,
@@ -805,7 +817,7 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'metadata', 'null': True,
             },
             'Pos Transaction Date': {
-                'map': 'pos_transaction_date', 'null': True,
+                'map': 'pos_transaction_date', 'type': date_parser, 'null': True,
             },
             'Pos Transaction Date TimeZone': {
                 'map': 'pos_transaction_date_time_zone', 'null': True,
