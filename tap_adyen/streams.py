@@ -599,10 +599,10 @@ STREAMS: MappingProxyType = MappingProxyType({
                 'map': 'payment_requester_type', 'null': True,
             },
             'Network Token Used': {
-                'map': 'network_token_used', 'null': True,
+                'map': 'network_token_used', 'type': parse_bool, 'null': True,
             },
             'Network Token Available': {
-                'map': 'network_token_available', 'null': True,
+                'map': 'network_token_available', 'type': parse_bool, 'null': True,
             },
             'Store': {
                 'map': 'store', 'null': True,
