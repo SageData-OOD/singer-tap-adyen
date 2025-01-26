@@ -144,7 +144,7 @@ class Adyen(object):  # noqa: WPS230
                     # Increate the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
-                    pass
+                    break
                 else:
                     self.logger.debug(
                         f"Dispute transaction details report date: {date} not "
@@ -233,17 +233,17 @@ class Adyen(object):  # noqa: WPS230
             elif response.status_code == 404:  # noqa: WPS432
                 if (parsed_date < datetime.utcnow() + timedelta(days=-1)):
                     self.logger.info(
-                        f"Dispute transaction details report date: {date} not "
+                        f"Payment accounting details report date: {date} not "
                         "found, continue.",
                     )
 
                     # Increate the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
-                    pass
+                    break
                 else:
                     self.logger.debug(
-                        f"Dispute transaction details report date: {date} not "
+                        f"Payment accounting details report date: {date} not "
                         "found, stopping.",
                     )
                     break
