@@ -144,7 +144,7 @@ class Adyen(object):  # noqa: WPS230
                     # Increate the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
-                    break
+                    pass
                 else:
                     self.logger.debug(
                         f"Dispute transaction details report date: {date} not "
@@ -240,7 +240,7 @@ class Adyen(object):  # noqa: WPS230
                     # Increate the day by 1 day
                     parsed_date = parsed_date + timedelta(days=1)
 
-                    break
+                    pass
                 else:
                     self.logger.debug(
                         f"Payment accounting details report date: {date} not "
@@ -396,8 +396,14 @@ class Adyen(object):  # noqa: WPS230
         Returns:
             requests.Response -- Response of HEAD request
         """
-        return self.client.head(
-            url,
-            auth=(self.report_user, self.user_password),
-            headers=dict(HEADERS),
-        )
+        try:
+            return self.client.head(
+                url,
+                auth=(self.report_user, self.user_password),
+                headers=dict(HEADERS),
+            )
+        # DP: shameless hack
+        except:
+            resp = requests.Response()
+            resp.status_code=404
+            return resp
